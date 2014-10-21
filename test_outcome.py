@@ -21,11 +21,12 @@ class TestOutcome(unittest.TestCase):
     def test_print(self):
         self.assertEqual(str(self.outcome1), "1 (37:1)")
 
+    def test_hash(self):
+        self.assertEqual(hash(self.outcome1), hash(self.outcome2))
+
 
 def main():
     unittest.main()
 
-if __name__ == 'main':
+if __name__ == '__main__':
     main()
-
-main()
