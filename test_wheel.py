@@ -59,12 +59,21 @@ class TestWheelConstruction(unittest.TestCase):
                          Outcome("00-0-1-2-3", RouletteGame.FiveBet)
                          ]
 
+        # create outcomes of bin 2
+        outcomes_bin2 = [Outcome("Number 00", RouletteGame.StraightBet),
+                         Outcome("00-0-1-2-3", RouletteGame.FiveBet)]
+
         # check number of outcomes to be equal
         self.assertEqual(len(outcomes_bin1), len(self.wheel.get(1)))
+        self.assertEqual(len(outcomes_bin2), len(self.wheel.get(37)))
 
-        # check outcomes to be in the bin
+        # check outcomes to be in the bin 1
         for outcome in outcomes_bin1:
             self.assertIn(outcome, self.wheel.get(1))
+
+        # check outcomes to be in the bin 00
+        for outcome in outcomes_bin2:
+            self.assertIn(outcome, self.wheel.get(37))
 
 
 class TestWheelAndNonRandomNumber(unittest.TestCase):
