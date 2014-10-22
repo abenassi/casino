@@ -1,6 +1,3 @@
-from wheel import Wheel
-
-
 class BinBuilder():
     """Build up Bins of a Wheel, filling them with its Outcomes.
 
@@ -23,47 +20,27 @@ class BinBuilder():
 
     # PRIVATE
     def _gen_straight(self, wheel):
-        print "OK"
+        pass
 
     def _gen_split(self, wheel):
-        print "OK"
+        pass
 
     def _gen_street(self, wheel):
-        print "OK"
+        pass
 
     def _gen_corner(self, wheel):
-        print "OK"
+        pass
 
     def _gen_line(self, wheel):
-        print "OK"
+        pass
 
     def _gen_dozen(self, wheel):
-        print "OK"
+        pass
 
     def _gen_column(self, wheel):
-        print "OK"
+        pass
 
     def _gen_even(self, wheel):
-        print "OK"
-
-
-def quick_test():
-    BinBuilder().build_bins(Wheel())
-
-quick_test()
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+        pass
 
 
