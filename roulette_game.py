@@ -4,6 +4,7 @@ class RouletteGame():
     StreetBet = 11
     DozenBet = 11
     CornerBet = 8
+    FiveBet = 6
     LineBet = 5
     ColumnBet = 2
     EvenBet = 1

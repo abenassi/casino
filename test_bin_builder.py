@@ -139,9 +139,9 @@ class GenDozenTestCase(BaseTestCaseBinBuilder):
         self.bin_builder._gen_dozen(self.wheel)
 
         # create some outcomes that should be there
-        self.outcome1 = Outcome("Dozen 1 to 12", RouletteGame.DozenBet)
-        self.outcome2 = Outcome("Dozen 13 to 24", RouletteGame.DozenBet)
-        self.outcome3 = Outcome("Dozen 25 to 36", RouletteGame.DozenBet)
+        self.outcome1 = Outcome("Dozen 1", RouletteGame.DozenBet)
+        self.outcome2 = Outcome("Dozen 2", RouletteGame.DozenBet)
+        self.outcome3 = Outcome("Dozen 3", RouletteGame.DozenBet)
 
         # check outcomes were created ok
         self.assertIn(self.outcome1, self.wheel.get(1))
@@ -205,6 +205,23 @@ class GenEvenTestCase(BaseTestCaseBinBuilder):
         self.assertIn(self.outcome3, self.wheel.get(19))
         self.assertIn(self.outcome3, self.wheel.get(31))
         self.assertIn(self.outcome3, self.wheel.get(36))
+
+
+class GenFiveTestCase(BaseTestCaseBinBuilder):
+
+    def runTest(self):
+        # call method to be tested
+        self.bin_builder._gen_five(self.wheel)
+
+        # create some outcomes that should be there
+        self.outcome1 = Outcome("00-0-1-2-3", RouletteGame.FiveBet)
+
+        # check outcomes were created ok
+        self.assertIn(self.outcome1, self.wheel.get(0))
+        self.assertIn(self.outcome1, self.wheel.get(37))
+        self.assertIn(self.outcome1, self.wheel.get(1))
+        self.assertIn(self.outcome1, self.wheel.get(2))
+        self.assertIn(self.outcome1, self.wheel.get(3))
 
 
 def main():

@@ -20,6 +20,9 @@ class Bin():
     def __str__(self):
         return ", ".join(map(str, self.outcomes))
 
+    def __repr__(self):
+        return ", ".join(map(str, self.outcomes))
+
     # PUBLIC
     def add(self, outcome):
         """Adds an outcome to the bin."""

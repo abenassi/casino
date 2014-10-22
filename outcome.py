@@ -27,6 +27,9 @@ class Outcome():
     def __str__(self):
         return "{} ({}:1)".format(self.name, self.odds)
 
+    def __repr__(self):
+        return "{} ({}:1)".format(self.name, self.odds)
+
     def __hash__(self):
         return int(hashlib.md5(self.name).hexdigest(), 16)
 
