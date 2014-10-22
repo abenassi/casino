@@ -2,6 +2,8 @@ import unittest
 from outcome import Outcome
 from wheel import Wheel
 from non_random import NonRandom
+from bin_builder import BinBuilder
+from roulette_game import RouletteGame
 
 
 class TestWheelConstruction(unittest.TestCase):
@@ -13,8 +15,9 @@ class TestWheelConstruction(unittest.TestCase):
         self.outcome_zero = Outcome("0", 35)
         self.outcome_zerozero = Outcome("00", 35)
 
-        # create wheel
+        # create wheel and bin builder
         self.wheel = Wheel()
+        self.bin_builder = BinBuilder()
 
     def test_add_outcome(self):
         """Testing add outcome to a Bin in a new Wheel."""
@@ -34,6 +37,34 @@ class TestWheelConstruction(unittest.TestCase):
         # assert that outcomes are in Bin 00
         self.assertIn(self.outcome_zerozero, self.wheel.get(37))
         self.assertIn(self.outcome_five, self.wheel.get(37))
+
+    def test_bin_building(self):
+        """Testing bin building of the wheel using BinBuilder."""
+
+        # build bins of the wheel
+        self.bin_builder.build_bins(self.wheel)
+
+        # create outcomes of bin 1
+        outcomes_bin1 = [Outcome("Street 1-2-3", RouletteGame.StreetBet),
+                         Outcome("Number 1", RouletteGame.StraightBet),
+                         Outcome("Line 1-2-3-4-5-6", RouletteGame.LineBet),
+                         Outcome("Low", RouletteGame.EvenBet),
+                         Outcome("Odd", RouletteGame.EvenBet),
+                         Outcome("Red", RouletteGame.EvenBet),
+                         Outcome("Corner 1-2-4-5", RouletteGame.CornerBet),
+                         Outcome("Dozen 1", RouletteGame.DozenBet),
+                         Outcome("Column 1", RouletteGame.ColumnBet),
+                         Outcome("Split 1-2", RouletteGame.SplitBet),
+                         Outcome("Split 1-4", RouletteGame.SplitBet),
+                         Outcome("00-0-1-2-3", RouletteGame.FiveBet)
+                         ]
+
+        # check number of outcomes to be equal
+        self.assertEqual(len(outcomes_bin1), len(self.wheel.get(1)))
+
+        # check outcomes to be in the bin
+        for outcome in outcomes_bin1:
+            self.assertIn(outcome, self.wheel.get(1))
 
 
 class TestWheelAndNonRandomNumber(unittest.TestCase):
