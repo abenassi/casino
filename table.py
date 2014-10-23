@@ -5,7 +5,7 @@ class InvalidBet(Exception):
 class Table():
     """Table contains all the Bet s created by the Player.
 
-    A table also has a betting limit, and the sum of all of a player’s bets
+    A table also has a betting limit, and the sum of all of a players bets
     must be less than or equal to this limit."""
 
     def __init__(self):
@@ -29,7 +29,7 @@ class Table():
         Args:
             bet: A Bet instance to be validated.
         """
-        pass
+        return bet.get_amount() < self._remaining_bets_limit()
 
     def place_bet(self, bet):
         """Adds this bet to the list of working bets.
@@ -44,4 +44,20 @@ class Table():
         Raises:
             InvalidBet
         """
-        pass
+
+        # check if the bet is valid first
+        if self.is_valid(bet):
+            self.bets.append(bet)
+
+        else:
+            raise InvalidBet
+
+    # PRIVATE
+    def _remaining_bets_limit(self):
+        """Calculates how much bets amount can be placed."""
+
+        total_bets_amount = sum(bet.get_amount() for bet in self.bets)
+
+        return self.limit - total_bets_amount
+
+

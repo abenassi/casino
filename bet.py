@@ -17,6 +17,6 @@ class Bet():
         """Compute the amount won, given the amount of this bet."""
         return self.amount_bet + self.outcome.win_amount(self.amount_bet)
 
-    def lose_amount(self):
-        """Returns the amount bet as the amount lost."""
+    def get_amount(self):
+        """Returns the amount bet."""
         return self.amount_bet
