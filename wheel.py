@@ -1,5 +1,6 @@
 from bin import Bin
 import random
+from bin_builder import BinBuilder
 
 
 class Wheel():
@@ -8,6 +9,7 @@ class Wheel():
         self.bins = tuple(Bin() for i in xrange(38))
         self.rng = rng or random.Random()
         self.all_outcomes = {}
+        self._build_bins()
 
     # PUBLIC
     def add_outcome(self, number, outcome):
@@ -42,3 +44,10 @@ class Wheel():
 
         else:
             return None
+
+    # PRIVATE
+    def _build_bins(self):
+        """Build bins of the wheel."""
+
+        bin_builder = BinBuilder()
+        bin_builder.build_bins(self)

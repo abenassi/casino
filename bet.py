@@ -20,3 +20,7 @@ class Bet():
     def get_amount(self):
         """Returns the amount bet."""
         return self.amount_bet
+
+    def get_outcome(self):
+        """Returns the outcome of the bet."""
+        return self.outcome

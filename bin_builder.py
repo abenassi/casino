@@ -1,6 +1,5 @@
 from roulette_game import RouletteGame
 from outcome import Outcome
-from wheel import Wheel
 
 
 class BinBuilder():

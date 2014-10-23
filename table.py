@@ -3,6 +3,7 @@ class InvalidBet(Exception):
 
 
 class Table():
+
     """Table contains all the Bet s created by the Player.
 
     A table also has a betting limit, and the sum of all of a players bets
@@ -14,10 +15,11 @@ class Table():
         self.bets = []
 
     def __iter__(self):
-        pass
+        for bet in self.bets:
+            yield bet
 
     def __str__(self):
-        pass
+        return ", ".join(self.bets)
 
     # PUBLIC
     def is_valid(self, bet):
@@ -52,6 +54,10 @@ class Table():
         else:
             raise InvalidBet
 
+    def clean_table(self):
+        """Delete all bets in table."""
+        self.bets = []
+
     # PRIVATE
     def _remaining_bets_limit(self):
         """Calculates how much bets amount can be placed."""
@@ -59,5 +65,3 @@ class Table():
         total_bets_amount = sum(bet.get_amount() for bet in self.bets)
 
         return self.limit - total_bets_amount
-
-
