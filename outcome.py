@@ -1,3 +1,4 @@
+
 import hashlib
 
 
@@ -37,3 +38,7 @@ class Outcome():
     def win_amount(self, amount):
         """Returns winning amount for a bet amount placed."""
         return self.odds * amount
+
+    def get_name(self):
+        """Returns string name of the outcome."""
+        return self.name

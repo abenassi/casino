@@ -4,6 +4,7 @@ from wheel import Wheel
 
 
 class BinBuilder():
+
     """Build up Bins of a Wheel, filling them with its Outcomes.
 
     Calls one method for each kind of bet, that iterates through the Bins of

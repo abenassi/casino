@@ -75,6 +75,22 @@ class TestWheelConstruction(unittest.TestCase):
         for outcome in outcomes_bin2:
             self.assertIn(outcome, self.wheel.get(37))
 
+    def test_outcome_mapping(self):
+        """Testing if Wheel instance is mapping added outcomes ok."""
+
+        # add outcomes to wheel
+        self.wheel.add_outcome(0, self.outcome_zero)
+        self.wheel.add_outcome(37, self.outcome_zerozero)
+        self.wheel.add_outcome(3, self.outcome_five)
+
+        # check that they are mapped
+        self.assertEqual(self.wheel.get_outcome(self.outcome_zero.get_name()),
+                         self.outcome_zero)
+        self.assertEqual(self.wheel.get_outcome(self.outcome_zerozero.get_name()),
+                         self.outcome_zerozero)
+        self.assertEqual(self.wheel.get_outcome(self.outcome_five.get_name()),
+                         self.outcome_five)
+
 
 class TestWheelAndNonRandomNumber(unittest.TestCase):
 

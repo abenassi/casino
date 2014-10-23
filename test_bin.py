@@ -7,9 +7,9 @@ from roulette_game import RouletteGame
 class TestBin(unittest.TestCase):
 
     def setUp(self):
-        self.outcome_five = Outcome("00-0-1-2-3", 6)
-        self.outcome_zero = Outcome("Number 0", 35)
-        self.outcome_zerozero = Outcome("Number 00", 35)
+        self.outcome_five = Outcome("00-0-1-2-3", RouletteGame.FiveBet)
+        self.outcome_zero = Outcome("Number 0", RouletteGame.StraightBet)
+        self.outcome_zerozero = Outcome("Number 00", RouletteGame.StraightBet)
 
         self.bin_zero = Bin(self.outcome_zero, self.outcome_five)
         self.bin_zerozero = Bin(self.outcome_zerozero, self.outcome_five)
