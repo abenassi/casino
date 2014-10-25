@@ -6,7 +6,11 @@ from bin_builder import BinBuilder
 from roulette_game import RouletteGame
 
 
-class TestWheelConstruction(unittest.TestCase):
+class WheelConstructionTestCase(unittest.TestCase):
+    """Test Wheel class construction.
+
+    Test that outcomes can be added, bins are built with the proper outcomes
+    and outcomes are mapped so they can be retrieved with their name."""
 
     def setUp(self):
 
@@ -92,13 +96,17 @@ class TestWheelConstruction(unittest.TestCase):
                          self.outcome_five)
 
 
-class TestWheelAndNonRandomNumber(unittest.TestCase):
+class WheelAndNonRandomNumberTestCase(unittest.TestCase):
+    """Test Wheel instance spinning results.
+
+    Based on a non random number generator with a seed and a fixed sequence of
+    results."""
 
     def setUp(self):
 
-        # create NonRandom instance with seed of 10
+        # create NonRandom instance with seed
         nr = NonRandom()
-        nr.set_seed(10)
+        nr.set_seed(1)
 
         # create wheel with NonRandom instance
         self.wheel = Wheel(nr)
@@ -106,7 +114,12 @@ class TestWheelAndNonRandomNumber(unittest.TestCase):
     def test_next(self):
         """Testing spinning the wheel to get next number."""
 
-        self.assertEqual(self.wheel.next(), self.wheel.get(10))
+        self.assertEqual(self.wheel.next(), self.wheel.get(5))
+        self.assertEqual(self.wheel.next(), self.wheel.get(32))
+        self.assertEqual(self.wheel.next(), self.wheel.get(29))
+        self.assertEqual(self.wheel.next(), self.wheel.get(9))
+        self.assertEqual(self.wheel.next(), self.wheel.get(18))
+        self.assertEqual(self.wheel.next(), self.wheel.get(17))
 
 
 def main():

@@ -7,7 +7,4 @@ class NonRandom(random.Random):
         self.value = None
 
     def set_seed(self, value):
-        self.value = value
-
-    def choice(self, sequence):
-        return sequence[self.value]
+        self.seed(value)

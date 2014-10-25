@@ -21,7 +21,12 @@ class Game():
         Stepping through this Iterator returns the individual Bet objects.
 
         If the winning Bin contains the Outcome, call the thePlayer win()
-        method otherwise call the thePlayer lose() method."""
+        method otherwise call the thePlayer lose() method.
+
+        Args:
+            player: A Player instance that places bets and get informed of
+            winning and loses of them.
+        """
 
         # place bets
         self.player = player
