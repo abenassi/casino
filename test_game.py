@@ -1,7 +1,7 @@
 import unittest
 from wheel import Wheel
-from player import Passenger57
 from table import Table
+from player import Passenger57
 from game import Game
 from non_random import NonRandom
 

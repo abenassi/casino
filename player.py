@@ -57,8 +57,9 @@ class Player(object):
                 # place bet on table
                 self.table.place_bet(bet)
 
-                # update stake
+                # update stake and rounds to go
                 self.stake -= bet.get_amount()
+                self.rounds_to_go -= 1
 
             else:
                 return False
@@ -121,7 +122,13 @@ class Martingale(Player):
                   self.get_outcome(self.BASE_BET))
 
         # update table with bet
-        super(Martingale, self).place_bets(bet)
+        success = super(Martingale, self).place_bets(bet)
+
+        # if bet coudn't be placed because no more money, leave and reset
+        if not success:
+            self.set_rounds_to_go(0)
+            self.loss_count = 0
+            self.bet_multiple = 1
 
     def win(self, bet):
         """Notification from the Game that the Bet was a winner.

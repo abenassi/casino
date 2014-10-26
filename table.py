@@ -11,7 +11,7 @@ class Table():
 
     def __init__(self):
 
-        self.limit = 1000
+        self.limit = 1000000
         self.bets = []
 
     def __iter__(self):
