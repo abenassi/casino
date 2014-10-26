@@ -21,6 +21,9 @@ class Table():
     def __str__(self):
         return ", ".join(self.bets)
 
+    def __contains__(self, bet):
+        return bet in self.bets
+
     # PUBLIC
     def is_valid(self, bet):
         """Validates this bet.
@@ -57,6 +60,17 @@ class Table():
     def clean_table(self):
         """Delete all bets in table."""
         self.bets = []
+
+    def remove_bet(self, bet):
+        """Remove bet from the table.
+
+        Args:
+            bet: A bet that has to be removed from table.
+        """
+        self.bets.remove(bet)
+
+    def is_empty(self):
+        return self.bets == []
 
     # PRIVATE
     def _remaining_bets_limit(self):

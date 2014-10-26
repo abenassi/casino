@@ -1,0 +1,104 @@
+import unittest
+from player import Martingale
+from table import Table
+from bet import Bet
+from wheel import Wheel
+from non_random import NonRandom
+from game import Game
+
+
+class MartingaleTestCase(unittest.TestCase):
+    """Test Martingale Player subclass."""
+
+    def setUp(self):
+
+        # create player
+        self.table = Table()
+        self.player = Martingale(self.table)
+        self.player.set_stake(1000)
+
+        # create bets to test them
+        self.bet1 = Bet(1, self._get_outcome("Black"))
+        self.bet2 = Bet(2, self._get_outcome("Black"))
+        self.bet3 = Bet(4, self._get_outcome("Black"))
+
+        # create NonRandom instance with seed
+        nr = NonRandom()
+        nr.set_seed(1)
+
+        # create game
+        self.wheel = Wheel(nr)
+        self.game = Game(self.wheel, self.table)
+
+    # PUBLIC
+    def test_place_bets(self):
+        """Test Martingale place bets method."""
+
+        # first round
+        self.player.place_bets()
+        self.assertIn(self.bet1, self.player.get_table())
+        self.player.lose(self.bet1)
+        self.assertTrue(self.player.get_table().is_empty())
+
+        # second round
+        self.player.place_bets()
+        self.assertIn(self.bet2, self.player.get_table())
+        self.player.lose(self.bet2)
+        self.assertTrue(self.player.get_table().is_empty())
+
+        # third round
+        self.player.place_bets()
+        self.assertIn(self.bet3, self.player.get_table())
+        self.assertNotIn(self.bet1, self.player.get_table())
+        self.assertNotIn(self.bet2, self.player.get_table())
+        self.player.win(self.bet3)
+        self.assertTrue(self.player.get_table().is_empty())
+
+        # fourth round
+        self.player.place_bets()
+        self.assertIn(self.bet1, self.player.get_table())
+        self.player.lose(self.bet1)
+        self.assertTrue(self.player.get_table().is_empty())
+
+    def test_stake(self):
+        """Play some cycles of Martingale game checking stake evolution."""
+
+        # first round: red - bet 1
+        self.game.cycle(self.player)
+        self.assertEqual(self.player.get_stake(), 999)
+
+        # first round: red - bet 2
+        self.game.cycle(self.player)
+        self.assertEqual(self.player.get_stake(), 997)
+
+        # first round: black - bet 4
+        self.game.cycle(self.player)
+        self.assertEqual(self.player.get_stake(), 1001)
+
+        # first round: red - bet 1
+        self.game.cycle(self.player)
+        self.assertEqual(self.player.get_stake(), 1000)
+
+        # first round: red - bet 2
+        self.game.cycle(self.player)
+        self.assertEqual(self.player.get_stake(), 998)
+
+        # first round: black - bet 4
+        self.game.cycle(self.player)
+        self.assertEqual(self.player.get_stake(), 1002)
+
+    # AUXILIAR METHODS
+    def _get_outcome(self, outcome_name):
+        """Query a constructed wheel for getting outcome."""
+
+        # create Whell
+        wheel = Wheel()
+
+        return wheel.get_outcome(outcome_name)
+
+
+def main():
+    unittest.main()
+
+if __name__ == '__main__':
+    main()

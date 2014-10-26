@@ -8,7 +8,6 @@ class Game():
     def __init__(self, wheel, table):
         self.wheel = wheel
         self.table = table
-        self.player = None
 
     # PUBLIC
     def cycle(self, player):
@@ -26,22 +25,30 @@ class Game():
         Args:
             player: A Player instance that places bets and get informed of
             winning and loses of them.
+        Returns:
+            True if a cycle has been played.
+            False if player is done playing.
         """
 
+        # check if player is still playing
+        if not player.playing():
+            return False
+
         # place bets
-        self.player = player
-        self.player.place_bets()
+        player.place_bets()
 
         # spin the wheel
         win_bin = self.wheel.next()
 
         # iterate bets
-        table = self.player.get_table()
+        table = player.get_table()
         for bet in table:
 
             # check if bet is a winning one
             if bet.get_outcome() in win_bin:
-                self.player.win(bet)
+                player.win(bet)
 
             else:
-                self.player.lose(bet)
+                player.lose(bet)
+
+        return True

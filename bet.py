@@ -12,6 +12,12 @@ class Bet():
     def __repr__(self):
         return "{} on {}".format(self.amount_bet, self.outcome)
 
+    def __eq__(self, other):
+        return str(self) == str(other)
+
+    def __ne__(self, other):
+        return str(self) != str(other)
+
     # PUBLIC
     def win_amount(self):
         """Compute the amount won, given the amount of this bet."""

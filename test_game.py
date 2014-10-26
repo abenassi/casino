@@ -75,6 +75,9 @@ class GameTestCase(unittest.TestCase):
         self.game.cycle(self.player)
         self.assertEqual(self.player.get_stake(), 0)
 
+        self.assertFalse(self.game.cycle(self.player))
+        self.assertFalse(self.player.playing())
+
 
 def main():
     unittest.main()
