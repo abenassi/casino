@@ -40,6 +40,9 @@ class Game():
         # spin the wheel
         win_bin = self.wheel.next()
 
+        # anounce winners
+        player.winners(win_bin)
+
         # iterate bets
         table = player.get_table()
         for bet in table:

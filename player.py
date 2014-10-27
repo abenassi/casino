@@ -12,6 +12,7 @@ class Player(object):
         self.stake = None
         self.rounds_to_go = sys.maxint
         self.table = table
+        self.last_outcomes = None
 
     # PUBLIC
     def get_table(self):
@@ -90,6 +91,11 @@ class Player(object):
         # remove bet
         self.table.remove_bet(bet)
 
+    def winners(self, outcomes):
+        """This is notification from the Game of all the winning outcomes."""
+
+        self.last_outcomes = outcomes
+
     def get_outcome(self, outcome_name):
         """Query a constructed wheel for getting outcome."""
 
@@ -130,6 +136,8 @@ class Martingale(Player):
             self.loss_count = 0
             self.bet_multiple = 1
 
+        return success
+
     def win(self, bet):
         """Notification from the Game that the Bet was a winner.
 
@@ -160,6 +168,40 @@ class Martingale(Player):
 
         # update stake and remove bet from table
         super(Martingale, self).lose(bet)
+
+
+class SevenReds(Martingale):
+    """SevenReds is a Martingale player who places bets in Roulette.
+
+    This player waits until the wheel has spun red seven times in a row before
+    betting black."""
+
+    red_count = 7
+
+    def place_bets(self):
+        """If redCount is zero, this places a bet on black, using the
+        bet multiplier."""
+
+        # check if there is no more reds to go
+        if self.red_count == 0:
+
+            # place bets following Martingale method
+            success = super(SevenReds, self).place_bets()
+
+            if success:
+                self.red_count = 7
+
+    def winners(self, outcomes):
+        """This is notification from the Game of all the winning outcomes.
+
+        If this vector includes red, redCount is decremented. Otherwise,
+        red_count is reset to 7."""
+
+        if self.get_outcome("Red") in outcomes:
+            self.red_count -= 1
+
+        else:
+            self.red_count = 7
 
 
 class Passenger57(Player):

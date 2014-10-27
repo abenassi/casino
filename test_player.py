@@ -1,5 +1,5 @@
 import unittest
-from player import Martingale
+from player import Martingale, SevenReds
 from table import Table
 from bet import Bet
 from wheel import Wheel
@@ -7,7 +7,19 @@ from non_random import NonRandom
 from game import Game
 
 
-class MartingaleTestCase(unittest.TestCase):
+class PlayerBaseTestCase(unittest.TestCase):
+
+    # AUXILIAR METHODS
+    def _get_outcome(self, outcome_name):
+        """Query a constructed wheel for getting outcome."""
+
+        # create Whell
+        wheel = Wheel()
+
+        return wheel.get_outcome(outcome_name)
+
+
+class MartingaleTestCase(PlayerBaseTestCase):
     """Test Martingale Player subclass."""
 
     def setUp(self):
@@ -86,6 +98,48 @@ class MartingaleTestCase(unittest.TestCase):
         # first round: black - bet 4
         self.game.cycle(self.player)
         self.assertEqual(self.player.get_stake(), 1002)
+
+
+class SevenRedsTestCase(PlayerBaseTestCase):
+    """Test SevenReds Player subclass."""
+
+    def setUp(self):
+
+        # create player
+        self.table = Table()
+        self.player = SevenReds(self.table)
+        self.player.set_stake(1000)
+
+        # create bets to test them
+        self.bet1 = Bet(1, self._get_outcome("Black"))
+        self.bet2 = Bet(2, self._get_outcome("Black"))
+        self.bet3 = Bet(4, self._get_outcome("Black"))
+
+        # create NonRandom instance with seed
+        nr = NonRandom()
+        nr.set_seed(1)
+
+        # create game
+        self.wheel = Wheel(nr)
+        self.game = Game(self.wheel, self.table)
+
+    def test_red_count(self):
+        """Play some cycles of Martingale game checking stake evolution."""
+
+        # first round: red - no bet (6 red to go)
+        self.game.cycle(self.player)
+        self.assertEqual(self.player.get_stake(), 1000)
+        self.assertEqual(self.player.red_count, 6)
+
+        # first round: red - no bet (5 red to go)
+        self.game.cycle(self.player)
+        self.assertEqual(self.player.get_stake(), 1000)
+        self.assertEqual(self.player.red_count, 5)
+
+        # first round: black - no bet (7 red to go)
+        self.game.cycle(self.player)
+        self.assertEqual(self.player.get_stake(), 1000)
+        self.assertEqual(self.player.red_count, 7)
 
     # AUXILIAR METHODS
     def _get_outcome(self, outcome_name):
